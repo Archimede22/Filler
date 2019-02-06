@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 17:57:32 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/06 09:16:31 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/06 12:42:50 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	get_width_height(int *width, int *height)
 	int		i;
 
 	line = NULL;
-	get_next_line(0, &line);
+	if (get_next_line(0, &line) <= 0)
+		dprintf(2, "SOMETHING WRONG\n");
 	if (ft_strncmp(line, "Plateau ", 8) != 0)
 		error();
 	i = 0;
@@ -38,7 +39,7 @@ static void	get_width_height(int *width, int *height)
 		++i;
 	if (line[i] != ':' || line[i + 1] != '\0')
 		error();
-	free(line);
+	ft_memdel((void**)&line);
 }
 
 void	get_line(t_board *b)
@@ -46,7 +47,8 @@ void	get_line(t_board *b)
 	char	*line;
 	int		i;
 
-	get_next_line(0, &line);
+	if (get_next_line(0, &line) <= 0)
+		dprintf(2, "SOMETHING WRONG\n");
 	i = 0;
 	while (line[i] == ' ')
 		++i;
@@ -72,7 +74,8 @@ void	get_line(t_board *b)
 	line = NULL;
 	while (i < board->height)
 	{
-		get_next_line(0, &line);
+		if (get_next_line(0, &line) <= 0)
+			dprintf(2, "SOMETHING WRONG\n");
 		if (ft_atoi(line) != i)
 			error();
 		j = 0;
@@ -97,7 +100,7 @@ t_board		*get_board(void)
 {
 	t_board	*board;
 
-	board = (t_board *)malloc(sizeof(board));
+	board = (t_board *)malloc(sizeof(t_board));
 	get_width_height(&(board->width), &(board->height));
 	get_line(board);
 	get_tab(board);

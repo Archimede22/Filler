@@ -6,12 +6,14 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 14:16:11 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/05 17:29:52 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/06 12:44:41 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "filler.h"
+
+#include <stdio.h>
 
 int		get_player(void)
 {
