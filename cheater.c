@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 09:31:10 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/08 09:10:49 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/08 10:09:06 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static t_bln	check_place(t_board *b, t_piece *p, t_coord tp)
 		tc.x = p->pos[i].x + tp.x;
 		tc.y = p->pos[i].y + tp.y;
 		if ((tc.x < 0 || tc.x > b->width || tc.y < 0 || tc.y >= b->height)
-			|| (b->player == 'O' && (b->val[tc.y][tc.x] == 'X'
-			|| b->val[tc.y][tc.x] == 'x')) || (b->player == 'X'
+			|| (b->pl == 'O' && (b->val[tc.y][tc.x] == 'X'
+			|| b->val[tc.y][tc.x] == 'x')) || (b->pl == 'X'
 			&& (b->val[tc.y][tc.x] == 'O' || b->val[tc.y][tc.x] == 'o')))
 			return (FALSE);
-		if (b->val[tc.y][tc.x] == b->player || ((b->player == 'X'
-				&& b->val[tc.y][tc.x] == 'x') || (b->player == 'O'
+		if (b->val[tc.y][tc.x] == b->pl || ((b->pl == 'X'
+				&& b->val[tc.y][tc.x] == 'x') || (b->pl == 'O'
 				&& b->val[tc.y][tc.x] == 'o')))
 		{
 			if (one_same == TRUE)
@@ -80,6 +80,6 @@ t_coord			cheater(t_board *board, t_piece *piece)
 		dprintf(2, "x = %d, y = %d\n", piece->pos[i].x, piece->pos[i].y);
 		++i;
 	}
-	dprintf(2, "player = %c\n", board->player);
+	dprintf(2, "pl = %c\n", board->pl);
 */	return (toplace);
 }

@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 16:42:06 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/07 17:36:49 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/08 14:31:45 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@ int		main(void)
 	{
 		if ((board = get_board()) != NULL)
 		{
-			board->player = (player_nb == 1) ? 'O' : 'X';
+			board->pl = (player_nb == 1) ? 'O' : 'X';
+			board->op = (player_nb == 1) ? 'X' : 'O';
 			piece = get_piece();
-			toplace = cheater(board, piece);
+			toplace = heater(board, piece);
 			ft_putnbr(toplace.y);
 			ft_putchar(' ');
 			ft_putnbr(toplace.x);
 			ft_putchar('\n');
-			//free_board(board); TODO
-			//free_peice(peice); TODO
+			free_board(board);
+			free_piece(piece);
 			//write(1, "1 1\n", 4);
 		}
 		else

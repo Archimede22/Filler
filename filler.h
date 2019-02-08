@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 16:58:03 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/07 17:36:41 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/08 13:46:02 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct	s_board
 	char		**val;
 	int			height;
 	int			width;
-	char		player;
+	char		pl;
+	char		op;
 }				t_board;
 
 typedef struct	s_piece
@@ -47,7 +48,12 @@ int				get_player(void);
 t_board			*get_board(void);
 t_piece			*get_piece(void);
 t_coord			cheater(t_board *board, t_piece *piece);
+t_coord			heater(t_board *board, t_piece *piece);
+void			even_heatmap(int **hm, t_board *b);
+t_coord			apply_heatmap(int **hm, t_piece *p, t_board *b);
 void			debug(char *s);
 void			error(void);
+void			free_board(t_board *board);
+void			free_piece(t_piece *piece);
 
 #endif

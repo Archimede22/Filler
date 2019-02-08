@@ -6,7 +6,7 @@
 #    By: jucapik <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/04 13:09:58 by jucapik           #+#    #+#              #
-#    Updated: 2019/02/07 17:35:27 by jucapik          ###   ########.fr        #
+#    Updated: 2019/02/08 13:46:39 by jucapik          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -16,7 +16,8 @@ CC			=	gcc
 
 CFLAGS		+=	-g -Wall -Wextra -Werror
 
-SRC0		=	main.c data.c cheater.c quit.c debug.c piece.c data2.c
+SRC0		=	main.c data.c cheater.c quit.c debug.c piece.c data2.c \
+				heater.c free.c even_heatmap.c apply_heatmap.c
 
 SRCPATH0	=	.
 
