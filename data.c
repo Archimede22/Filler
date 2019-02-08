@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 17:57:32 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/06 12:42:50 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/07 17:08:36 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 
 #include <stdio.h>
 
-static void	get_width_height(int *width, int *height)
+static int	get_width_height(int *width, int *height)
 {
 	char	*line;
 	int		i;
 
 	line = NULL;
 	if (get_next_line(0, &line) <= 0)
-		dprintf(2, "SOMETHING WRONG\n");
+		return (-1);
 	if (ft_strncmp(line, "Plateau ", 8) != 0)
 		error();
 	i = 0;
@@ -40,15 +40,16 @@ static void	get_width_height(int *width, int *height)
 	if (line[i] != ':' || line[i + 1] != '\0')
 		error();
 	ft_memdel((void**)&line);
+	return (1);
 }
 
-void	get_line(t_board *b)
+int			get_line(t_board *b)
 {
 	char	*line;
 	int		i;
 
 	if (get_next_line(0, &line) <= 0)
-		dprintf(2, "SOMETHING WRONG\n");
+		return (-1);
 	i = 0;
 	while (line[i] == ' ')
 		++i;
@@ -61,9 +62,10 @@ void	get_line(t_board *b)
 		++i;
 	}
 	ft_memdel((void**)&line);
+	return (1);
 }
 
- void	get_tab(t_board *board)
+int			get_tab(t_board *board)
 {
 	char	*line;
 	int		i;
@@ -75,7 +77,7 @@ void	get_line(t_board *b)
 	while (i < board->height)
 	{
 		if (get_next_line(0, &line) <= 0)
-			dprintf(2, "SOMETHING WRONG\n");
+			return (-1);
 		if (ft_atoi(line) != i)
 			error();
 		j = 0;
@@ -88,12 +90,11 @@ void	get_line(t_board *b)
 		while (line[j] == '.' || line[j] == 'O' || line[j] == 'X' ||
 				line[j] == 'x' || line[j] == 'o')
 			++j;
-		if (j - 4 != board->width || line[j] != '\0')
-			error();
 		ft_memdel((void**)&line);
 		++i;
 	}
 	board->val[i] = NULL;	
+	return (1);
 }
 
 t_board		*get_board(void)
@@ -101,8 +102,11 @@ t_board		*get_board(void)
 	t_board	*board;
 
 	board = (t_board *)malloc(sizeof(t_board));
-	get_width_height(&(board->width), &(board->height));
-	get_line(board);
-	get_tab(board);
+	if (get_width_height(&(board->width), &(board->height)) == -1)
+		return (NULL);
+	if (get_line(board) == -1)
+		return (NULL);
+	if (get_tab(board) == -1)
+		return (NULL);
 	return (board);
 } //TODO free appropiately with the error() calls

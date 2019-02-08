@@ -6,7 +6,7 @@
 #    By: jucapik <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/04 13:09:58 by jucapik           #+#    #+#              #
-#    Updated: 2019/02/05 14:25:17 by jucapik          ###   ########.fr        #
+#    Updated: 2019/02/07 17:35:27 by jucapik          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,9 +14,9 @@ NAME		=	jucapik.filler
 
 CC			=	gcc
 
-CFLAGS		+=	-Wall -Wextra -Werror
+CFLAGS		+=	-g -Wall -Wextra -Werror
 
-SRC0		=	main.c data.c choose_place.c quit.c debug.c piece.c data2.c
+SRC0		=	main.c data.c cheater.c quit.c debug.c piece.c data2.c
 
 SRCPATH0	=	.
 
