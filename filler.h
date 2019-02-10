@@ -6,13 +6,12 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 16:58:03 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/08 13:46:02 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/10 16:56:34 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
-
 
 typedef struct	s_coordinates
 {
@@ -34,7 +33,7 @@ typedef struct	s_piece
 	t_coord		*pos;
 	int			height;
 	int			width;
-	int			nb_s; //nb of starts
+	int			nb_s;
 }				t_piece;
 
 typedef enum	e_boolean
@@ -44,16 +43,37 @@ typedef enum	e_boolean
 	ERROR = -1,
 }				t_bln;
 
+typedef struct	s_img
+{
+	void		*mlx_ptr;
+	void		*win_ptr;
+	void		*ptr;
+	int			*val;
+	int			fd;
+	t_board		*board;
+	int			**hm;
+	int			block_size;
+	int			height;
+	int			width;
+}				t_img;
+
 int				get_player(void);
 t_board			*get_board(void);
 t_piece			*get_piece(void);
 t_coord			cheater(t_board *board, t_piece *piece);
 t_coord			heater(t_board *board, t_piece *piece);
+int				**init_heatmap(t_board *b);
 void			even_heatmap(int **hm, t_board *b);
 t_coord			apply_heatmap(int **hm, t_piece *p, t_board *b);
 void			debug(char *s);
 void			error(void);
 void			free_board(t_board *board);
 void			free_piece(t_piece *piece);
+void			free_heatmap(int **hm, t_board *b);
+
+t_img			*init_img(void);
+void			close_img(t_img *img);
+void			put_img(t_img *img, t_board *b, int **hm);
+int				key_press(int keycode, void *param);
 
 #endif

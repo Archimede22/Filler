@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 17:57:32 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/08 10:55:30 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/10 16:48:00 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ static int	get_width_height(int *width, int *height)
 	if (get_next_line(0, &line) <= 0)
 		return (-1);
 	if (ft_strncmp(line, "Plateau ", 8) != 0)
-		error();
+	{
+		return (-1);
+	}
 	i = 0;
 	while (line[i] != ' ')
 		++i;
@@ -39,7 +41,7 @@ static int	get_width_height(int *width, int *height)
 		++i;
 	if (line[i] != ':' || line[i + 1] != '\0')
 		error();
-	ft_memdel((void**)&line);
+	free(line);
 	return (1);
 }
 
@@ -61,7 +63,7 @@ int			get_line(t_board *b)
 			error();
 		++i;
 	}
-	ft_memdel((void**)&line);
+	free(line);
 	return (1);
 }
 
@@ -72,28 +74,25 @@ int			get_tab(t_board *board)
 	int		j;
 
 	board->val = (char **)malloc(sizeof(char *) * (board->height + 1));
-	i = 0;
+	i = -1;
 	line = NULL;
-	while (i < board->height)
+	while (++i < board->height)
 	{
-		if (get_next_line(0, &line) <= 0)
-			return (-1);
+		get_next_line(0, &line);
 		if (ft_atoi(line) != i)
 			error();
 		j = 0;
 		while (line[j] >= '0' && line[j] <= '9')
 			++j;
-		++j;
-		if (j != 4)
+		if (++j != 4)
 			error();
 		board->val[i] = ft_strdup(line + j);
 		while (line[j] == '.' || line[j] == 'O' || line[j] == 'X' ||
 				line[j] == 'x' || line[j] == 'o')
 			++j;
 		ft_memdel((void**)&line);
-		++i;
 	}
-	board->val[i] = NULL;	
+	board->val[i] = NULL;
 	return (1);
 }
 
@@ -109,4 +108,4 @@ t_board		*get_board(void)
 	if (get_tab(board) == -1)
 		return (NULL);
 	return (board);
-} //TODO free appropiately with the error() calls
+}

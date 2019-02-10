@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data2.c                                            :+:      :+:    :+:   */
+/*   maingraph.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/05 14:16:11 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/10 11:09:54 by jucapik          ###   ########.fr       */
+/*   Created: 2019/02/10 12:59:31 by jucapik           #+#    #+#             */
+/*   Updated: 2019/02/10 16:57:08 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <mlx.h>
+#include <stdlib.h>
+
+#include <stdio.h>
 
 #include "libft/libft.h"
 #include "filler.h"
 
-#include <stdio.h>
-
-int		get_player(void)
+int		main(void)
 {
-	char	*line;
-	int		ret;
+	t_img	*img;
 
-	get_next_line(0, &line);
-	if (ft_strncmp(line, "$$$ exec p", 10) != 0)
-	{
-		error();
-		return (-1);
-	}
-	ret = ft_atoi(line + 10);
-	if (ret != 1 && ret != 2)
-	{
-		error();
-		return (-1);
-	}
-	if (ft_strncmp(line + 11, " : [./jucapik.filler]", 21) != 0)
-	{
-		error();
-		return (-1);
-	}
-	free(line);
-	return (ret);
+	if ((img = init_img()) == NULL)
+		return (1);
+	mlx_hook(img->win_ptr, 2, 0, &key_press, (void*)img);
+	mlx_loop(img->mlx_ptr);
+	close_img(img);
+	return (0);
 }

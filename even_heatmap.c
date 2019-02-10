@@ -6,13 +6,13 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 11:22:16 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/08 15:53:51 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/10 12:52:27 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	cp(t_board *b, int y, int x) // check place
+static int	cp(t_board *b, int y, int x)
 {
 	if (y < 0 || x < 0 || y >= b->height || x >= b->width)
 		return (FALSE);
@@ -54,6 +54,7 @@ static void	run_through(int **hm, t_coord start, t_coord dir, t_board *b)
 		start.y += dir.y;
 	}
 }
+
 void		even_heatmap(int **hm, t_board *b)
 {
 	t_coord start;

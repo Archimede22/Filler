@@ -6,15 +6,26 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 09:13:49 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/08 15:52:48 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/10 17:41:55 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "filler.h"
 
-static t_bln	cp(t_board *b, int i, int j, char c) // check place
+void			free_heatmap(int **hm, t_board *b)
+{
+	int i;
+
+	i = 0;
+	while (i < b->height)
+		free(hm[i++]);
+	free(hm);
+}
+
+static t_bln	cp(t_board *b, int i, int j, char c)
 {
 	if (i < 0 || j < 0 || i >= b->height || j >= b->width || b->val[i][j] != c)
 		return (FALSE);
@@ -24,25 +35,30 @@ static t_bln	cp(t_board *b, int i, int j, char c) // check place
 
 static int		assign_place(t_board *b, int i, int j, int max)
 {
+	int		ret;
+
+	ret = 0;
 	if (b->val[i][j] == 'o')
 		b->val[i][j] = 'O';
 	if (b->val[i][j] == 'x')
 		b->val[i][j] = 'X';
 	if (b->val[i][j] == 'O' || b->val[i][j] == 'X')
 		return (-1);
-	else if (cp(b, i, j + 1, b->op) == TRUE || cp(b, i, j - 1, b->op) == TRUE ||
-			cp(b, i + 1, j, b->op) == TRUE || cp(b, i - 1, j, b->op) == TRUE) 
-		return (max);
-/*	else if ((i < 3 && j < 3) || (i < 3 && j >= b->width - 3) || (i >= b->height - 3
-				&& j < 3) || (i >= b->height - 3 && j >= b->width - 3))
-		return (max / 5);*/
-	else if (cp(b, i, j + 1, b->pl) == TRUE || cp(b, i - 1, j, b->pl) == TRUE || 
+	if (cp(b, i, j + 1, b->op) == TRUE || cp(b, i, j - 1, b->op) == TRUE ||
+			cp(b, i + 1, j, b->op) == TRUE || cp(b, i - 1, j, b->op) == TRUE ||
+			cp(b, i + 1, j + 1, b->op) == TRUE || cp(b, i + 1, j - 1, b->op) == TRUE ||
+			cp(b, i + 1, j - 1, b->op) == TRUE || cp(b, i - 1, j + 1, b->op) == TRUE)
+		ret += max * 2;
+	if (i == b->height / 4 || i == (b->height / 4) * 3 ||
+			j == b->width / 4 || j == (b->width / 4) * 3)
+		ret += max;
+	if (cp(b, i, j + 1, b->pl) == TRUE || cp(b, i - 1, j, b->pl) == TRUE ||
 			cp(b, i + 1, j, b->pl) == TRUE || cp(b, i, j - 1, b->pl) == TRUE)
-		return (2);
-	return (0);
+		ret += 2;
+	return (ret);
 }
 
-static int		**init_heatmap(t_board *b)
+int				**init_heatmap(t_board *b)
 {
 	int		i;
 	int		j;
@@ -59,10 +75,13 @@ static int		**init_heatmap(t_board *b)
 		while (j < b->width)
 		{
 			hm[i][j] = assign_place(b, i, j, max);
+//			dprintf(2, "%3d ", hm[i][j]);
 			++j;
 		}
+//		dprintf(2, "\n");
 		++i;
 	}
+//	dprintf(2, "\n");
 	return (hm);
 }
 
@@ -72,23 +91,8 @@ t_coord			heater(t_board *board, t_piece *piece)
 	t_coord	toplace;
 
 	heat_map = init_heatmap(board);
-	//0 for nothing, -1 for not valide, max around ennemie and less_max around me
 	even_heatmap(heat_map, board);
-	//even out
 	toplace = apply_heatmap(heat_map, piece, board);
-	//declare one variable for the "value" of each placement, test each placement
-	//and change value accordingly
-	//	free_heatmap(heat_map);
-/*	int i = 0, j;
-	while (i < board->height)
-	{
-		j = 0;
-		while (j < board->width)
-			dprintf(2, "%2d ", heat_map[i][j++]);
-		dprintf(2, "\n\n");
-		++i;
-	}*/
-//	toplace.x = 1;
-//	toplace.y = 1;
+	free_heatmap(heat_map, board);
 	return (toplace);
 }

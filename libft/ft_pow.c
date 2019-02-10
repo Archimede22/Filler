@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data2.c                                            :+:      :+:    :+:   */
+/*   ft_pow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/05 14:16:11 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/10 11:09:54 by jucapik          ###   ########.fr       */
+/*   Created: 2019/02/10 15:15:31 by jucapik           #+#    #+#             */
+/*   Updated: 2019/02/10 15:18:50 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include "filler.h"
-
-#include <stdio.h>
-
-int		get_player(void)
+int		ft_pow(int nb, int pow)
 {
-	char	*line;
 	int		ret;
 
-	get_next_line(0, &line);
-	if (ft_strncmp(line, "$$$ exec p", 10) != 0)
-	{
-		error();
-		return (-1);
-	}
-	ret = ft_atoi(line + 10);
-	if (ret != 1 && ret != 2)
-	{
-		error();
-		return (-1);
-	}
-	if (ft_strncmp(line + 11, " : [./jucapik.filler]", 21) != 0)
-	{
-		error();
-		return (-1);
-	}
-	free(line);
+	if (pow < 0)
+		return (0);
+	if (pow == 0)
+		return (1);
+	ret = nb;
+	while (pow-- > 1)
+		ret *= nb;
 	return (ret);
 }

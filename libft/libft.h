@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 19:10:19 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/01 12:32:20 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/10 15:19:27 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ void			*ft_memccpy_s(void *dst, const void *src, int c, size_t n);
 void			*ft_memset_s(void *b, int c, size_t len);
 int				ft_lstaddend(t_list *alst, t_list *new);
 int				ft_lstsize(t_list *alst);
+int				ft_pow(int nb, int pow);
 
 #endif

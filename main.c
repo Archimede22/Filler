@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 16:42:06 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/08 14:31:45 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/08 16:40:23 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,9 @@ int		main(void)
 			ft_putchar('\n');
 			free_board(board);
 			free_piece(piece);
-			//write(1, "1 1\n", 4);
 		}
 		else
-		{
 			check = 1;
-//			dprintf(2, "DONE\n");
-		}
 	}
 	return (0);
 }

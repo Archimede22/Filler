@@ -6,14 +6,12 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 11:11:27 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/08 11:05:12 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/10 12:53:25 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "filler.h"
-
-#include <stdio.h>
 
 static void	get_width_height(t_piece *piece)
 {
@@ -39,6 +37,7 @@ static void	get_width_height(t_piece *piece)
 		++i;
 	if (line[i] != ':' || line[i + 1] != '\0')
 		error();
+	free(line);
 }
 
 static char	**get_tab(t_piece *piece)
@@ -120,11 +119,9 @@ static void	get_pos(char **tab, t_piece *p)
 ** We assume that we're starting with the line "piece X Y"
 */
 
-#include <stdio.h>
-
 t_piece		*get_piece(void)
 {
-	t_piece *piece;	
+	t_piece	*piece;
 	char	**tab;
 
 	piece = (t_piece *)malloc(sizeof(t_piece));
@@ -132,11 +129,5 @@ t_piece		*get_piece(void)
 	tab = get_tab(piece);
 	get_nb_s_and_check(tab, piece);
 	get_pos(tab, piece);
-/*	int	i = 0;
-	while (i < piece->nb_s)
-	{
-		dprintf(2, "x = %d, y = %d\n", piece->pos[i].x, piece->pos[i].y);
-		++i;
-	}*/
 	return (piece);
 }

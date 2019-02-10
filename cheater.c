@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 09:31:10 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/08 10:09:06 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/10 12:45:03 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,5 @@ t_coord			cheater(t_board *board, t_piece *piece)
 		}
 		++toplace.y;
 	}
-/*	dprintf(2, "something is very wrong\n");
-	int i = 0;
-	while (i < board->height)
-	{
-		int j = 0;
-		while (j < board->width)
-			dprintf(2, "%c", board->val[i][j++]);
-		dprintf(2, "\n");
-		++i;
-	}
-	i = 0;
-	while (i < piece->nb_s)
-	{
-		dprintf(2, "x = %d, y = %d\n", piece->pos[i].x, piece->pos[i].y);
-		++i;
-	}
-	dprintf(2, "pl = %c\n", board->pl);
-*/	return (toplace);
+	return (toplace);
 }
