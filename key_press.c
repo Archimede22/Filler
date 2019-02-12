@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 16:50:14 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/10 18:17:52 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/11 18:07:13 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include "libft/libft.h"
 #include "filler.h"
 
-void	key_n(t_img *img)
+#include <stdio.h>
+
+void	key_o(t_img *img)
 {
 	char *line;
 
@@ -32,7 +34,7 @@ void	key_n(t_img *img)
 	}
 }
 
-void	key_m(t_img *img)
+void	key_p(t_img *img)
 {
 	char *line;
 
@@ -52,26 +54,33 @@ void	key_m(t_img *img)
 		get_next_line(0, &line);
 		free(line);
 	}
-	key_n(img);
+	if ((img->board = get_board()) != NULL)
+	{
+		free_board(img->board);
+		free_piece(get_piece());
+		line = NULL;
+		get_next_line(0, &line);
+		free(line);
+	}
+	key_o(img);
 }
 
 void	key_esc(t_img *img)
 {
+	free(img->p1);
+	free(img->p2);
 	free(img);
 	close_img(img);
 	exit(0);
 }
 
-int		key_press(int keycode, void *param)
+int		key_press(SDL_Event *event, t_img *img)
 {
-	t_img *img;
-
-	img = (t_img *)param;
-	if (keycode == 45)
-		key_n(img);
-	if (keycode == 53)
+	if (event->key.keysym.sym == SDLK_o)
+		key_o(img);
+	else if (event->key.keysym.sym == SDLK_ESCAPE)
 		key_esc(img);		
-	if (keycode == 46)
-		key_m(img);
+	else if (event->key.keysym.sym == SDLK_p)
+		key_p(img);
 	return (0);
 }

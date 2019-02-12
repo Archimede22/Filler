@@ -6,55 +6,67 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 13:55:32 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/10 18:38:04 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/11 15:33:56 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <mlx.h>
 #include <stdio.h>
+#include "libui/SDL2/SDL.h"
 #include "filler.h"
 #include "libft/libft.h"
 
-static int		*get_c_img(void *img_ptr)
+static void		get_hm_color(t_coord p, t_img *img, t_board *b, int **hm)
 {
-	char	*c_img;
-	int		bpp;
-	int		sl;
-	int		endian;
+	t_coord			t;
+	unsigned int	res;
 
-	c_img = mlx_get_data_addr(img_ptr, &bpp, &sl, &endian);
-	return ((int *)c_img);
+/*	if (p.y == 0)
+	{	
+		int i = 0, j;
+		dprintf(2, "hm_color 1\n");
+		while (i < img->board->height)
+		{
+			j = 0;
+			while (j < img->board->width)
+				dprintf(2, "%3d", img->hm[i][j++]);
+			dprintf(2, "\n");
+			++i;
+		}
+		dprintf(2, "\n");
+	}*/
+	t.x = (int)((double)p.x / (double)img->block_size) - b->width;
+	t.y = (int)((double)p.y / (double)img->block_size);
+	if (b->val[t.y][t.x] == 'X')
+		SDL_SetRenderDrawColor(img->renderer, 100, 100, 150, 255);
+	else if (b->val[t.y][t.x] == 'O')
+		SDL_SetRenderDrawColor(img->renderer, 100, 150, 100, 255);
+	else
+	{
+		if (hm[t.y][t.x] < 0)
+			SDL_SetRenderDrawColor(img->renderer, 20, 0, 0, 255);
+		else
+		{
+			res = ft_abs((hm[t.y][t.x] * 5) % 255);;
+			SDL_SetRenderDrawColor(img->renderer, res, res, res, 255);
+		}
+	}
+/*	if (p.y == 0)
+	{	
+		int i = 0, j;
+		dprintf(2, "hm_color 2\n");
+		while (i < img->board->height)
+		{
+			j = 0;
+			while (j < img->board->width)
+				dprintf(2, "%3d", img->hm[i][j++]);
+			dprintf(2, "\n");
+			++i;
+		}
+		dprintf(2, "\n");
+	}*/
 }
 
-static int		get_hm_color(t_coord p, t_img *img, t_board *b, int **hm)
-{
-	double		mult;
-	int			ret;
-	int			i;
-	t_coord		t;
-	int			max;
-
-	max = (b->width > b->height) ? b->width : b->height;
-	t.x = p.x / img->block_size;
-	t.y = p.y / img->block_size;
-	if (hm[t.y][t.x - b->width] == -1)
-		return (0x777777);
-	mult = max / 16.0;
-	ret = 0;
-	i = 0;
-//	while (i < 6)
-//	{
-		ret += (int)(hm[t.y][t.x - b->width] * 10);
-//		++i;
-//	}
-	ret += 0x0000f0;
-	return (ret);
-}
-
-static int		get_board_color(t_coord p, t_img *img, t_board *b)
+static void		get_board_color(t_coord p, t_img *img, t_board *b)
 {
 	int		x;
 	int		y;
@@ -62,16 +74,17 @@ static int		get_board_color(t_coord p, t_img *img, t_board *b)
 	x = p.x / img->block_size;
 	y = p.y / img->block_size;
 	if (b->val[y][x] == '.')
-		return (0X000000);
+		SDL_SetRenderDrawColor(img->renderer, 0, 0, 0, 255);
 	else if (b->val[y][x] == 'X')
-		return (0x0000a0);
+		SDL_SetRenderDrawColor(img->renderer, 0, 0, 100, 255);
 	else if (b->val[y][x] == 'O')
-		return (0x00a050);
+		SDL_SetRenderDrawColor(img->renderer, 0, 100, 0, 255);
 	else if (b->val[y][x] == 'x')
-		return (0x550000);
+		SDL_SetRenderDrawColor(img->renderer, 100, 0, 0, 255);
 	else if (b->val[y][x] == 'o')
-		return (0x005500);
-	return (0xffffff);
+		SDL_SetRenderDrawColor(img->renderer, 100, 0, 0, 255);
+	else
+		SDL_SetRenderDrawColor(img->renderer, 255, 255, 255, 255);
 }
 
 static void		fill_img(t_img *img, t_board *b, int **hm)
@@ -84,10 +97,13 @@ static void		fill_img(t_img *img, t_board *b, int **hm)
 		p.x = 0;
 		while (p.x < img->width)
 		{
-			if (p.x / img->block_size < b->width)
-				img->val[p.y * img->width + p.x] = get_board_color(p, img, b);
+			if (p.x / (double)img->block_size < b->width)
+				get_board_color(p, img, b);
+			else if (p.x / (double)img->block_size == b->width)
+				SDL_SetRenderDrawColor(img->renderer, 255, 255, 255, 255);
 			else
-				img->val[p.y * img->width + p.x] = get_hm_color(p, img, b, hm);	
+				get_hm_color(p, img, b, hm);	
+			SDL_RenderDrawPoint(img->renderer, p.x, p.y);
 			++p.x;
 		}
 		++p.y;
@@ -96,10 +112,8 @@ static void		fill_img(t_img *img, t_board *b, int **hm)
 
 void            put_img(t_img *img, t_board *b, int **hm)
 {
-	mlx_clear_window(img->mlx_ptr, img->win_ptr);
-	img->ptr = mlx_new_image(img->mlx_ptr, img->width, img->height);
-	img->val = get_c_img(img->ptr);
+	SDL_RenderClear(img->renderer);
 	fill_img(img, b, hm);
-	mlx_put_image_to_window(img->mlx_ptr, img->win_ptr, img->ptr, 0, 0);
-	mlx_destroy_image(img->mlx_ptr, img->ptr);
+	SDL_RenderPresent(img->renderer);
+	SDL_UpdateWindowSurface(img->win);
 }

@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 09:13:49 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/10 17:41:55 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/11 14:48:25 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_bln	cp(t_board *b, int i, int j, char c)
 		return (TRUE);
 }
 
-static int		assign_place(t_board *b, int i, int j, int max)
+int		assign_place(t_board *b, int i, int j, int max)
 {
 	int		ret;
 
@@ -48,10 +48,10 @@ static int		assign_place(t_board *b, int i, int j, int max)
 			cp(b, i + 1, j, b->op) == TRUE || cp(b, i - 1, j, b->op) == TRUE ||
 			cp(b, i + 1, j + 1, b->op) == TRUE || cp(b, i + 1, j - 1, b->op) == TRUE ||
 			cp(b, i + 1, j - 1, b->op) == TRUE || cp(b, i - 1, j + 1, b->op) == TRUE)
-		ret += max * 2;
+		ret += max;
 	if (i == b->height / 4 || i == (b->height / 4) * 3 ||
 			j == b->width / 4 || j == (b->width / 4) * 3)
-		ret += max;
+		ret += max / 2;
 	if (cp(b, i, j + 1, b->pl) == TRUE || cp(b, i - 1, j, b->pl) == TRUE ||
 			cp(b, i + 1, j, b->pl) == TRUE || cp(b, i, j - 1, b->pl) == TRUE)
 		ret += 2;
@@ -66,14 +66,15 @@ int				**init_heatmap(t_board *b)
 	int		max;
 
 	max = (b->height > b->width) ? b->height : b->width;
-	hm = (int **)malloc(sizeof(int *) * (b->height));
+	hm = (int **)malloc(sizeof(int *) * (b->height + 1));
 	i = 0;
 	while (i < b->height)
 	{
-		hm[i] = (int *)malloc(sizeof(int) * (b->width));
+		hm[i] = (int *)malloc(sizeof(int) * (b->width + 1));
 		j = 0;
 		while (j < b->width)
 		{
+			hm[i][j] = 0;
 			hm[i][j] = assign_place(b, i, j, max);
 //			dprintf(2, "%3d ", hm[i][j]);
 			++j;

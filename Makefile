@@ -6,7 +6,7 @@
 #    By: jucapik <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/04 13:09:58 by jucapik           #+#    #+#              #
-#    Updated: 2019/02/10 16:57:25 by jucapik          ###   ########.fr        #
+#    Updated: 2019/02/11 17:47:45 by jucapik          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -36,13 +36,11 @@ HDRPATH0	=	.
 
 HEADERS0	=	$(addprefix $(HDRPATH0)/, $(HDR0))
 
-MLXNAME		=	mlx
-
-MLXPATH		=	/usr/local/lib
-
-MLXHEAD		=	/usr/local/include
-
 LIBNAME		=	ft
+
+LIBSDL		=	SDL2
+
+LIBUI		=	libui
 
 LIBPATH		=	libft
 
@@ -62,11 +60,9 @@ all:		$(NAME)
 $(NAME):	$(OBJ0) $(HDRPATH0)/$(HDR0) $(OBJ1)
 	cd $(LIBPATH) && $(MAKE)
 	$(CC) -o $(NAME) $(OBJ0) -I $(LIBHEAD) -L $(LIBPATH) -l$(LIBNAME) \
-		-I $(MLXHEAD) -L $(MLXPATH) -l$(MLXNAME) \
-		-lmlx -framework OpenGL -framework AppKit
+		-L $(LIBUI) -l$(LIBSDL) $(sdl2-config --cflags --libs)
 	$(CC) -o $(GRAPHNAME) $(OBJ1) -I $(LIBHEAD) -L $(LIBPATH) -l$(LIBNAME) \
-		-I $(MLXHEAD) -L $(MLXPATH) -l$(MLXNAME) \
-		-lmlx -framework OpenGL -framework AppKit
+		-L $(LIBUI) -l$(LIBSDL) $(sdl2-config --cflags --libs)
 
 clean:
 	@(cd $(LIBPATH) && $(MAKE) clean)
