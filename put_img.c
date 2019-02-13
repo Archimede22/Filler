@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 13:55:32 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/11 15:33:56 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 14:02:41 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@ static void		get_hm_color(t_coord p, t_img *img, t_board *b, int **hm)
 	t_coord			t;
 	unsigned int	res;
 
-/*	if (p.y == 0)
-	{	
-		int i = 0, j;
-		dprintf(2, "hm_color 1\n");
-		while (i < img->board->height)
-		{
-			j = 0;
-			while (j < img->board->width)
-				dprintf(2, "%3d", img->hm[i][j++]);
-			dprintf(2, "\n");
-			++i;
-		}
-		dprintf(2, "\n");
-	}*/
 	t.x = (int)((double)p.x / (double)img->block_size) - b->width;
 	t.y = (int)((double)p.y / (double)img->block_size);
 	if (b->val[t.y][t.x] == 'X')
@@ -46,24 +32,10 @@ static void		get_hm_color(t_coord p, t_img *img, t_board *b, int **hm)
 			SDL_SetRenderDrawColor(img->renderer, 20, 0, 0, 255);
 		else
 		{
-			res = ft_abs((hm[t.y][t.x] * 5) % 255);;
+			res = ft_abs((hm[t.y][t.x] * 5) % 255);
 			SDL_SetRenderDrawColor(img->renderer, res, res, res, 255);
 		}
 	}
-/*	if (p.y == 0)
-	{	
-		int i = 0, j;
-		dprintf(2, "hm_color 2\n");
-		while (i < img->board->height)
-		{
-			j = 0;
-			while (j < img->board->width)
-				dprintf(2, "%3d", img->hm[i][j++]);
-			dprintf(2, "\n");
-			++i;
-		}
-		dprintf(2, "\n");
-	}*/
 }
 
 static void		get_board_color(t_coord p, t_img *img, t_board *b)
@@ -102,7 +74,7 @@ static void		fill_img(t_img *img, t_board *b, int **hm)
 			else if (p.x / (double)img->block_size == b->width)
 				SDL_SetRenderDrawColor(img->renderer, 255, 255, 255, 255);
 			else
-				get_hm_color(p, img, b, hm);	
+				get_hm_color(p, img, b, hm);
 			SDL_RenderDrawPoint(img->renderer, p.x, p.y);
 			++p.x;
 		}
@@ -110,7 +82,7 @@ static void		fill_img(t_img *img, t_board *b, int **hm)
 	}
 }
 
-void            put_img(t_img *img, t_board *b, int **hm)
+void			put_img(t_img *img, t_board *b, int **hm)
 {
 	SDL_RenderClear(img->renderer);
 	fill_img(img, b, hm);

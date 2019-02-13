@@ -6,7 +6,7 @@
 #    By: jucapik <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/04 13:09:58 by jucapik           #+#    #+#              #
-#    Updated: 2019/02/11 17:47:45 by jucapik          ###   ########.fr        #
+#    Updated: 2019/02/13 14:12:24 by jucapik          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -18,12 +18,14 @@ CC			=	gcc
 
 CFLAGS		+=	-g -Wall -Wextra -Werror
 
-SRC0		=	main.c data.c cheater.c quit.c debug.c piece.c data2.c \
-				heater.c free.c even_heatmap.c apply_heatmap.c
+SRC0		=	main.c data.c piece2.c quit.c debug.c piece.c data2.c \
+				heater.c free.c even_heatmap.c apply_heatmap.c free2.c \
+				data_helper.c
 
-SRC1		=	maingraph.c data.c cheater.c quit.c debug.c piece.c data2.c \
+SRC1		=	maingraph.c data.c piece2.c quit.c debug.c piece.c data2.c \
 				heater.c free.c even_heatmap.c apply_heatmap.c img.c \
-				put_img.c key_press.c
+				put_img.c key_press.c data_graph.c piece_graph.c free2.c \
+				data_helper.c
 
 SRCPATH0	=	.
 
@@ -57,7 +59,7 @@ OBJ1		=	$(SRC1:.c=.o)
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ0) $(HDRPATH0)/$(HDR0) $(OBJ1)
+$(NAME):	$(OBJ0) $(OBJ1)
 	cd $(LIBPATH) && $(MAKE)
 	$(CC) -o $(NAME) $(OBJ0) -I $(LIBHEAD) -L $(LIBPATH) -l$(LIBNAME) \
 		-L $(LIBUI) -l$(LIBSDL) $(sdl2-config --cflags --libs)
@@ -74,5 +76,6 @@ fclean:
 	rm -rf $(OBJ0)
 	rm -rf $(OBJ1)
 	rm -rf $(NAME)
+	rm -rf $(GRAPHNAME)
 
-re:			fclean all
+re:			fclean all $(HDRPATH0)/$(HDR0)

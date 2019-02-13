@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 13:26:39 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/10 12:44:26 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 14:01:41 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 static int		check_place(t_board *b, t_piece *p, t_coord tp, int **hm)
 {
 	int		i;
-	t_bln	one_same; //true if there has already been a X/O placed on
-	t_coord	tc; // to check
+	t_bln	one_same;
+	t_coord	tc;
 	int		val;
 
 	one_same = FALSE;

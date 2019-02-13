@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 13:03:29 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/11 18:32:54 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 11:24:36 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,26 +76,34 @@ int			get_players(t_img *img)
 	}
 	else
 		img->p2 = ft_strsub(line, i, j);
+	free(line);
 	get_next_line(0, &line);
 	free(line);
 	return (1);
 }
 
-int			parse_once_with_start(t_img *img)
+int			parse_once_with_start(t_img *img, t_board *b)
 {
-	img->hm = init_heatmap(img->board);
-	even_heatmap(img->hm, img->board);
-	put_img(img, img->board, img->hm);
-	free_piece(get_piece());
-	free_heatmap(img->hm, img->board);
-	free_board(img->board);
-	return (1);
+	t_piece *p;
+
+	if (b != NULL)
+	{	img->hm = init_heatmap(img->board);
+		even_heatmap(img->hm, img->board);
+		put_img(img, img->board, img->hm);
+		p = get_piece();
+		free_piece(&p);
+		free_heatmap(img->hm, img->board);
+		free_board(&(img->board));
+		return (1);
+	}
+	else
+		return (-1);
 }
 
 t_img		*init_img(void)
 {
 	t_img	*img;
-	
+
 	img = (t_img *)malloc(sizeof(t_img));
 	img->win = NULL;
 	img->renderer = NULL;
@@ -110,13 +118,13 @@ t_img		*init_img(void)
 	img->width = img->board->width * 2 * img->block_size;
 	img->height = img->board->height * img->block_size;
 	if ((img->win = SDL_CreateWindow("Filler", 700,
-				500, img->width, img->height,
-				SDL_WINDOW_SHOWN)) == NULL)
+					500, img->width, img->height,
+					SDL_WINDOW_SHOWN)) == NULL)
 		return (NULL);
 	if ((img->renderer = SDL_CreateRenderer(img->win, -1,
 					SDL_RENDERER_ACCELERATED)) == NULL)
 		return (NULL);
-	if (parse_once_with_start(img) == -1)
+	if (parse_once_with_start(img, img->board) == -1)
 		return (NULL);
 	return (img);
 }

@@ -6,33 +6,63 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 10:55:17 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/11 17:47:15 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 13:38:12 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libui/SDL2/SDL.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include "filler.h"
 
-void		free_board(t_board *b)
+#include <unistd.h>
+#include <stdio.h>
+
+int			free_and_error(char *line)
+{
+	free(line);
+	error();
+	return (-1);
+}
+
+int			free_line_board(t_board *b, char *line, int lim)
 {
 	int		i;
 
 	i = 0;
-	while (b->val[i] != NULL)
+	free(line);
+	while (i < lim)
 		free(b->val[i++]);
 	free(b->val);
-	free(b);
+	error();
+	return (-1);
 }
 
-void		free_piece(t_piece *p)
+void		free_board(t_board **b)
 {
-	free(p->pos);
-	free(p);
+	int		i;
+
+	if (*b != NULL)
+	{
+		i = 0;
+		while (i < (*b)->height)
+			free((*b)->val[i++]);
+		free((*b)->val);
+		free((*b));
+		*b = NULL;
+	}
 }
 
-void        close_img(t_img *img)
+void		free_piece(t_piece **p)
+{
+	if (*p != NULL)
+	{
+		free((*p)->pos);
+		free((*p));
+		*p = NULL;
+	}
+}
+
+void		close_img(t_img *img)
 {
 	SDL_DestroyWindow(img->win);
 	SDL_Quit();

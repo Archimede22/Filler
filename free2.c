@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/01 12:34:45 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/12 18:02:45 by jucapik          ###   ########.fr       */
+/*   Created: 2019/02/12 18:25:42 by jucapik           #+#    #+#             */
+/*   Updated: 2019/02/12 19:25:33 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "filler.h"
 
-void		error(void)
+char		**free_piece_and_line(char **tab, int lim)
 {
-	write(1, "1000 1000\n", 10);
-	//free stuff TODO
+	int		i;
+
+	i = 0;
+	error();
+	while (i < lim)
+		free(tab[i++]);
+	free(tab);
+	return (NULL);
 }

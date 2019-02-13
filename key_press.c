@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 16:50:14 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/11 18:07:13 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 11:58:03 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,49 +19,48 @@
 void	key_o(t_img *img)
 {
 	char *line;
+	t_piece *p;
 
-	if ((img->board = get_board()) != NULL)
+	if ((img->board = get_board_graph()) != NULL)
 	{
+		p = get_piece();
+		free_piece(&p);
 		img->hm = init_heatmap(img->board);
 		even_heatmap(img->hm, img->board);
 		put_img(img, img->board, img->hm);
 		free_heatmap(img->hm, img->board);
-		free_board(img->board);
-		free_piece(get_piece());
 		line = NULL;
 		get_next_line(0, &line);
 		free(line);
 	}
+	free_board(&(img->board));
 }
 
 void	key_p(t_img *img)
 {
 	char *line;
+	t_piece *p;
 
-	if ((img->board = get_board()) != NULL)
+	if ((img->board = get_board_graph()) != NULL)
 	{
-		free_board(img->board);
-		free_piece(get_piece());
+		free_board(&(img->board));
+		p = get_piece();
+		free_piece(&p);
 		line = NULL;
 		get_next_line(0, &line);
 		free(line);
 	}
-	if ((img->board = get_board()) != NULL)
+	if ((img->board = get_board_graph()) != NULL)
 	{
-		free_board(img->board);
-		free_piece(get_piece());
+		free_board(&(img->board));
+		p = get_piece();
+		free_piece(&p);
 		line = NULL;
 		get_next_line(0, &line);
 		free(line);
 	}
-	if ((img->board = get_board()) != NULL)
-	{
-		free_board(img->board);
-		free_piece(get_piece());
-		line = NULL;
-		get_next_line(0, &line);
-		free(line);
-	}
+	else
+		return ;
 	key_o(img);
 }
 

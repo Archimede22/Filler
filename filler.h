@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 16:58:03 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/11 17:27:37 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 14:48:43 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,35 @@
 
 #include "libui/SDL2/SDL.h"
 
-typedef struct	s_coordinates
+typedef struct		s_coordinates
 {
-	int			x;
-	int			y;
-}				t_coord;
+	int				x;
+	int				y;
+}					t_coord;
 
-typedef struct	s_board
+typedef struct		s_board
 {
-	char		**val;
-	int			height;
-	int			width;
-	char		pl;
-	char		op;
-}				t_board;
+	char			**val;
+	int				height;
+	int				width;
+	char			pl;
+	char			op;
+}					t_board;
 
-typedef struct	s_piece
+typedef struct		s_piece
 {
-	t_coord		*pos;
-	int			height;
-	int			width;
-	int			nb_s;
-}				t_piece;
+	t_coord			*pos;
+	int				height;
+	int				width;
+	int				nb_s;
+}					t_piece;
 
-typedef enum	e_boolean
+typedef enum		e_boolean
 {
 	TRUE = 0,
 	FALSE = 1,
 	ERROR = -1,
-}				t_bln;
+}					t_bln;
 
 typedef struct		s_img
 {
@@ -58,23 +58,29 @@ typedef struct		s_img
 	char			*p2;
 }					t_img;
 
-int				get_player(void);
-t_board			*get_board(void);
-t_piece			*get_piece(void);
-t_coord			cheater(t_board *board, t_piece *piece);
-t_coord			heater(t_board *board, t_piece *piece);
-int				**init_heatmap(t_board *b);
-void			even_heatmap(int **hm, t_board *b);
-t_coord			apply_heatmap(int **hm, t_piece *p, t_board *b);
-void			debug(char *s);
-void			error(void);
-void			free_board(t_board *board);
-void			free_piece(t_piece *piece);
-void			free_heatmap(int **hm, t_board *b);
-
-t_img			*init_img(void);
-void			close_img(t_img *img);
-void			put_img(t_img *img, t_board *b, int **hm);
-int				key_press(SDL_Event *event, t_img *img);
+int					get_player(void);
+t_board				*get_board_graph(void);
+t_piece				*get_piece_graph(char *line);
+t_board				*get_board(void);
+t_piece				*get_piece(void);
+t_coord				cheater(t_board *board, t_piece *piece);
+t_coord				heater(t_board *board, t_piece *piece);
+int					**init_heatmap(t_board *b);
+void				even_heatmap(int **hm, t_board *b);
+t_coord				apply_heatmap(int **hm, t_piece *p, t_board *b);
+void				debug(char *s);
+void				error(void);
+int					check_piece(char **tab, t_piece *p);
+void				free_board(t_board **b);
+int					free_line_board(t_board *board, char *line, int lim);
+int					free_and_error(char *line);
+void				free_piece(t_piece **p);
+char				**free_piece_and_line(char **tab, int lim);
+void				free_heatmap(int **hm, t_board *b);
+t_img				*init_img(void);
+void				close_img(t_img *img);
+void				put_img(t_img *img, t_board *b, int **hm);
+int					key_press(SDL_Event *event, t_img *img);
+int					get_tab_helper(t_board *board, char *line, int i);
 
 #endif
