@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 16:50:14 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 11:58:03 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 15:37:34 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 void	key_o(t_img *img)
 {
-	char *line;
-	t_piece *p;
+	char	*line;
+	t_piece	*p;
 
 	if ((img->board = get_board_graph()) != NULL)
 	{
@@ -38,8 +38,8 @@ void	key_o(t_img *img)
 
 void	key_p(t_img *img)
 {
-	char *line;
-	t_piece *p;
+	char	*line;
+	t_piece	*p;
 
 	if ((img->board = get_board_graph()) != NULL)
 	{
@@ -78,7 +78,7 @@ int		key_press(SDL_Event *event, t_img *img)
 	if (event->key.keysym.sym == SDLK_o)
 		key_o(img);
 	else if (event->key.keysym.sym == SDLK_ESCAPE)
-		key_esc(img);		
+		key_esc(img);
 	else if (event->key.keysym.sym == SDLK_p)
 		key_p(img);
 	return (0);

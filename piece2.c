@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 09:15:29 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 12:56:02 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 15:44:49 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	rec(char **tab, int x, int y)
 	return (0);
 }
 
-int				check_piece(char **tab, t_piece *p)
+int			check_piece(char **tab, t_piece *p)
 {
 	int		x;
 	int		y;

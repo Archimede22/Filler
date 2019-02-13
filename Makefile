@@ -6,7 +6,7 @@
 #    By: jucapik <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/04 13:09:58 by jucapik           #+#    #+#              #
-#    Updated: 2019/02/13 14:12:24 by jucapik          ###   ########.fr        #
+#    Updated: 2019/02/13 16:35:13 by jucapik          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,12 +20,12 @@ CFLAGS		+=	-g -Wall -Wextra -Werror
 
 SRC0		=	main.c data.c piece2.c quit.c debug.c piece.c data2.c \
 				heater.c free.c even_heatmap.c apply_heatmap.c free2.c \
-				data_helper.c
+				helper.c
 
 SRC1		=	maingraph.c data.c piece2.c quit.c debug.c piece.c data2.c \
 				heater.c free.c even_heatmap.c apply_heatmap.c img.c \
 				put_img.c key_press.c data_graph.c piece_graph.c free2.c \
-				data_helper.c
+				helper.c
 
 SRCPATH0	=	.
 

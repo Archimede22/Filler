@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 13:03:29 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 11:24:36 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:11:33 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,29 @@
 #include "libft/libft.h"
 #include "filler.h"
 
-int			get_start(void)
+int			check_line(char *truel)
 {
 	char	*line;
 
 	get_next_line(0, &line);
-	if (ft_strcmp(line, "# -------------- VM  version 1.1 ------------- #")
-			!= 0)
+	if (ft_strcmp(line, truel) != 0)
 		return (-1);
 	free(line);
-	get_next_line(0, &line);
-	if (ft_strcmp(line, "#                                              #")
-			!= 0)
+	return (1);
+}
+
+int			get_start(void)
+{
+	if (check_line("# -------------- VM  version 1.1 ------------- #") == -1)
 		return (-1);
-	free(line);
-	get_next_line(0, &line);
-	if (ft_strcmp(line, "# 42 / filler VM Developped by: Hcao - Abanlin #")
-			!= 0)
+	if (check_line("#                                              #") == -1)
 		return (-1);
-	free(line);
-	get_next_line(0, &line);
-	if (ft_strcmp(line, "#                                              #")
-			!= 0)
+	if (check_line("# 42 / filler VM Developped by: Hcao - Abanlin #") == -1)
 		return (-1);
-	free(line);
-	get_next_line(0, &line);
-	if (ft_strcmp(line, "# -------------------------------------------- #")
-			!= 0)
+	if (check_line("#                                              #") == -1)
 		return (-1);
-	free(line);
+	if (check_line("# -------------------------------------------- #") == -1)
+		return (-1);
 	return (1);
 }
 
@@ -54,17 +48,10 @@ int			get_players(t_img *img)
 {
 	int			i;
 	int			j;
-	static char	*line = NULL;
+	char		*line;
 	static int	player = 1;
 
-	if (get_next_line(0, &line) <= 0)
-		return (-1);
-	if (ft_strncmp(line, "launched ", 9) != 0)
-		return (-1);
-	i = ft_strlen(line) - 1;
-	while (i >= 0 && line[i] != '/')
-		--i;
-	if (i == -1)
+	if ((i = get_players_helper(&line)) == -1)
 		return (-1);
 	j = i;
 	while (line[j] != '\0' && line[j] != '.')
@@ -87,7 +74,8 @@ int			parse_once_with_start(t_img *img, t_board *b)
 	t_piece *p;
 
 	if (b != NULL)
-	{	img->hm = init_heatmap(img->board);
+	{
+		img->hm = init_heatmap(img->board);
 		even_heatmap(img->hm, img->board);
 		put_img(img, img->board, img->hm);
 		p = get_piece();

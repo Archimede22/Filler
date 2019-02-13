@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 11:22:16 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 14:08:59 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 15:30:33 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,6 @@ void		even_heatmap(int **hm, t_board *b)
 	dir.x = 1;
 	dir.y = 1;
 	run_through(hm, start, dir, b);
-/*	start.x = 0;
-	start.y = b->height - 1;
-	dir.x = 1;
-	dir.y = -1;
-	run_through(hm, start, dir, b);
-	start.x = b->width - 1;
-	start.y = 0;
-	dir.x = -1;
-	dir.y = 1;
-	run_through(hm, start, dir, b);*/ //TODO
 	start.x = b->width - 1;
 	start.y = b->height - 1;
 	dir.x = -1;

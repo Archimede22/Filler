@@ -6,14 +6,14 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 16:58:03 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 14:48:43 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:10:26 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-#include "libui/SDL2/SDL.h"
+# include "libui/SDL2/SDL.h"
 
 typedef struct		s_coordinates
 {
@@ -63,7 +63,6 @@ t_board				*get_board_graph(void);
 t_piece				*get_piece_graph(char *line);
 t_board				*get_board(void);
 t_piece				*get_piece(void);
-t_coord				cheater(t_board *board, t_piece *piece);
 t_coord				heater(t_board *board, t_piece *piece);
 int					**init_heatmap(t_board *b);
 void				even_heatmap(int **hm, t_board *b);
@@ -82,5 +81,8 @@ void				close_img(t_img *img);
 void				put_img(t_img *img, t_board *b, int **hm);
 int					key_press(SDL_Event *event, t_img *img);
 int					get_tab_helper(t_board *board, char *line, int i);
+int					get_width_height_graph_helper(int *width, int *heigth,
+		char *line);
+int					get_players_helper(char **line);
 
 #endif

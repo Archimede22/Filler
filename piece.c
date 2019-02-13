@@ -6,7 +6,7 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 11:11:27 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 12:53:23 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/02/13 15:40:29 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	get_nb_s_and_check(char **tab, t_piece *p)
 	return (1);
 }
 
-static void	get_pos(char **tab, t_piece *p)
+static int	get_pos(char **tab, t_piece *p)
 {
 	int		i;
 	int		j;
@@ -113,6 +113,7 @@ static void	get_pos(char **tab, t_piece *p)
 		}
 		++i;
 	}
+	return (1);
 }
 
 /*
@@ -140,8 +141,7 @@ t_piece		*get_piece(void)
 		free(piece);
 		return (NULL);
 	}
-	get_pos(tab, piece);
-	if (check_piece(tab, piece) == -1)
+	if (get_pos(tab, piece) == 1 && check_piece(tab, piece) == -1)
 	{
 		free(piece);
 		return (NULL);
