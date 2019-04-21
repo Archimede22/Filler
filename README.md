@@ -15,7 +15,8 @@ I used A heatmap base on two heuristics :
   ./usage : ./filler_vm -f [map] -p1 ./[player one's AI] -p2 [player two's AI]
   or an example command could be
   /filler_vm -f maps/map02 -p1 ./jucapik.filler -p2 AIs/cpoulet.filler | ./shower.filler
-  The Ai I submitted for this project is jucapik.filler and the visualizer if shower.filler
+  The Ai I submitted for this project is jucapik.filler and the visualizer if shower.filler.
+  When in the visualizer, Press the keys P or O to advance in the battle.
   
 
 I was given 124/100 (maximum grade is 125/100) for this project.
