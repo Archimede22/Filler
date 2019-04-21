@@ -6,12 +6,11 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 13:55:32 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 14:02:41 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/04/21 11:26:56 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "libui/SDL2/SDL.h"
 #include "filler.h"
 #include "libft/libft.h"
 

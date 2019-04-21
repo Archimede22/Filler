@@ -6,11 +6,10 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 13:03:29 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 17:11:33 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/04/21 11:26:48 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libui/SDL2/SDL.h"
 #include <stdlib.h>
 
 #include <stdio.h>

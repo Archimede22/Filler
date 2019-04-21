@@ -6,14 +6,14 @@
 /*   By: jucapik <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 16:58:03 by jucapik           #+#    #+#             */
-/*   Updated: 2019/02/13 17:10:26 by jucapik          ###   ########.fr       */
+/*   Updated: 2019/04/20 20:04:33 by jucapik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-# include "libui/SDL2/SDL.h"
+# include "SDL.h"
 
 typedef struct		s_coordinates
 {

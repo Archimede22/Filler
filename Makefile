@@ -1,24 +1,44 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jucapik <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: keenouxe <keenouxe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/04 13:09:58 by jucapik           #+#    #+#              #
-#    Updated: 2019/02/13 16:35:13 by jucapik          ###   ########.fr        #
+#    Created: 2018/08/19 08:23:39 by keenouxe          #+#    #+#              #
+#    Updated: 2019/04/21 11:51:42 by jucapik          ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME		=	jucapik.filler
-
 GRAPHNAME	=	shower.filler
+#	Make options
+MAKEFLAGS	+=	--no-print-directory
 
-CC			=	gcc
+#	Output
+UNAME	:=	$(shell uname)
+ifeq ($(UNAME), Darwin)
+	ECHO	=	@echo
+endif
 
-CFLAGS		+=	-g -Wall -Wextra -Werror
+ifeq ($(UNAME), Linux)
+	ECHO	=	@echo -e
+endif
 
-SRC0		=	main.c data.c piece2.c quit.c debug.c piece.c data2.c \
+#	Compilator
+CC		=	gcc
+FLAGS	=	-Wall -Wextra -Werror
+
+#	Folders
+LIBDIR	=	lib$(LIB)
+SRCDIR	=	.
+OBJDIR	=	objs
+INCDIR	=	.									\
+			libft/includes						\
+			sdl_main/SDL2-2.0.8/include/SDL2
+
+#	Source files
+SRC		=	main.c data.c piece2.c quit.c debug.c piece.c data2.c \
 				heater.c free.c even_heatmap.c apply_heatmap.c free2.c \
 				helper.c
 
@@ -27,55 +47,106 @@ SRC1		=	maingraph.c data.c piece2.c quit.c debug.c piece.c data2.c \
 				put_img.c key_press.c data_graph.c piece_graph.c free2.c \
 				helper.c
 
-SRCPATH0	=	.
 
-SOURCES0	=	$(addprefix $(SRCPATH0)/, $(SRC0))
+#	Graphic folders
+SDL_MAIN_DOWNLOAD = https://www.libsdl.org/release/SDL2-2.0.8.tar.gz
 
-HDR0		=	filler.h
+LIBSDL			=   SDL2
+LIBSDLIMG		=   SDL2_image
+
+LFLAG		=		-L sdl_main/SDL2-2.0.8/lib  -lSDL2
 
 
-HDRPATH0	=	.
+OBJ		=	$(SRC:.c=.o)
 
-HEADERS0	=	$(addprefix $(HDRPATH0)/, $(HDR0))
+LIB		=	ft
 
-LIBNAME		=	ft
+#	Prefixes
+OBJP	=	$(addprefix $(OBJDIR)/, $(SRC:.c=.o))
+OBJP1	=	$(addprefix $(OBJDIR)/, $(SRC1:.c=.o))
+	INCP 	=	$(foreach dir, $(INCDIR), -I$(dir))
+	LLIBP =		$(addprefix -l, $(LIB))
+	LIBNAME =	$(addprefix lib, $(LIB))
+	LIBP =		$(addprefix -L, $(LIBNAME)/)
 
-LIBSDL		=	SDL2
+#	Compilator
+CC		=	gcc
+FLAGS	=	-Wall -Wextra -Werror
 
-LIBUI		=	libui
+#	Default Rule
+DRULE	=	all
 
-LIBPATH		=	libft
+#	Main rules
+default	:
+	$(ECHO) "$(PUR)===> $(GRE)$(NAME) : $(PUR) START RULE : $(DRULE) <===$(DEF)"
+	@make $(DRULE)
+	$(ECHO) "$(PUR)===> $(GRE)$(NAME) : $(PUR) END RULE : $(DRULE) <===$(DEF)"
 
-LIBHEAD		=	libft
+all		:	lib $(NAME)
 
-OBJ0		=	$(SRC0:.c=.o)
+re		:	fclean default
 
-OBJ1		=	$(SRC1:.c=.o)
+#	Graphic Library rules
 
-%.o:		$(SRCPATH0)/%.c
-	$(CC) -o $@ -c $^ $(CFLAGS)
+lib: sdl_main
 
-.PHONY:		clean fclean re
+sdl_main:
+	@if [ -d "./sdl_main/" ]; then \
+		echo "SDL (main) ==> Nothing to be done"; \
+		else \
+		mkdir sdl_main && \
+		echo "SDL (main) ==> Downloading SDL" && \
+		cd ./sdl_main && \
+		curl -s $(SDL_MAIN_DOWNLOAD) -O && \
+		echo "SDL (main) ==> Compilation SDL main" && \
+		tar xzf SDL2-2.0.8.tar.gz && \
+		cd SDL2-2.0.8 && \
+		./configure --prefix=$(shell pwd)/sdl_main/SDL2-2.0.8 > /dev/null && \
+		$(MAKE) > /dev/null &&  \
+		$(MAKE) install > /dev/null && \
+		echo "SDL (main) ==> DONE"; \
+		fi
 
-all:		$(NAME)
+#	Compilation rules
+libft/libft.a	:
+	$(ECHO) "$(YEL)===> $(GRE)lib$(LIB)$(YEL) Compilation <===$(DEF)"
+	@make all -C lib$(LIB)
 
-$(NAME):	$(OBJ0) $(OBJ1)
-	cd $(LIBPATH) && $(MAKE)
-	$(CC) -o $(NAME) $(OBJ0) -I $(LIBHEAD) -L $(LIBPATH) -l$(LIBNAME) \
-		-L $(LIBUI) -l$(LIBSDL) $(sdl2-config --cflags --libs)
-	$(CC) -o $(GRAPHNAME) $(OBJ1) -I $(LIBHEAD) -L $(LIBPATH) -l$(LIBNAME) \
-		-L $(LIBUI) -l$(LIBSDL) $(sdl2-config --cflags --libs)
+$(OBJDIR)/%.o	:  $(SRCDIR)/%.c filler.h
+	@mkdir -p $(OBJDIR)
+	$(CC) $(FLAGS) $(INCP) -c -o $@ $<
 
-clean:
-	@(cd $(LIBPATH) && $(MAKE) clean)
-	rm -rf $(OBJ0)
-	rm -rf $(OBJ1)
+$(NAME)	:	libft/libft.a $(OBJP) $(OBJP1)
+	$(ECHO) "$(YEL)===> $(GRE)$(NAME) : $(YEL) Binary Compilation <===$(DEF)"
+	$(CC) $(FLAGS) -o $@ $(OBJP) $(INCP) $(LIBP) $(LLIBP) \
+		$(LFLAG) -lSDL2
+	$(CC) $(FLAGS) -o $(GRAPHNAME) $(OBJP1) $(INCP) $(LIBP) $(LLIBP) \
+		$(LFLAG) -lSDL2
 
-fclean:
-	@(cd $(LIBPATH) && $(MAKE) fclean)
-	rm -rf $(OBJ0)
-	rm -rf $(OBJ1)
-	rm -rf $(NAME)
-	rm -rf $(GRAPHNAME)
+#	Cleaner rules
+clean	:
+	$(ECHO) "$(RED)===> $(GRE)$(NAME) : $(RED) Delete Object Files <===$(DEF)"
+	@rm -rf $(OBJDIR)
 
-re:			fclean all $(HDRPATH0)/$(HDR0)
+fclean	:	clean
+	$(ECHO) "$(RED)===> $(GRE)$(NAME) : $(RED) Delete Binary File <===$(DEF)"
+	@rm -f $(NAME)
+	@rm -f $(GRAPHNAME)
+	$(ECHO) "$(RED)===> Delete $(GRE)lib$(LIB)$(RED) <===$(DEF)"
+	@make fclean -C lib$(LIB)
+
+#	Phony
+.PHONY	=	default all re clean fclean $(OBJDIR) $(NAME)
+#	Color
+DEF		=	\033[0m
+BLA		=	\033[30m
+BLI		=	\033[5m
+BLU		=	\033[34m
+CYA		=	\033[36m
+GRA		=	\033[1m
+GRE		=	\033[32m
+PUR		=	\033[35m
+RED		=	\033[31m
+SOU		=	\033[4m
+WHI		=	\033[37m
+YEL		=	\033[33m
