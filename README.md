@@ -8,7 +8,8 @@ predict where he will go to flash there before he will.
 I used a heatmap base on two heuristics :
   - boxes directly around the opponnent have high value
   - boxes around the the 3/4 and 1/4 of the map horizontally and vertically are given value to
-      give the AI more liberty, so that it isn't solely stuck on the opponent player's positions
+      give the AI more liberty, so that it isn't solely stuck on the opponent player's positions.
+      
  After finding the places in the map with value, the heatmap is "smoothed out" so that the AI can give value 
  to boxes around the important areas
 
