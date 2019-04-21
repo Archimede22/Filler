@@ -12,9 +12,10 @@ I used a heatmap base on two heuristics :
  After finding the places in the map with value, the heatmap is "smoothed out" so that the AI can give value 
  to boxes around the important areas
 
-  ./usage : ./filler_vm -f [map] -p1 ./[player one's AI] -p2 [player two's AI]
-  or an example command could be
-  /filler_vm -f maps/map02 -p1 ./jucapik.filler -p2 AIs/cpoulet.filler | ./shower.filler
+    ./usage : ./filler_vm -f [map] -p1 ./[player one's AI] -p2 [player two's AI]
+    or an example command could be
+    ./filler_vm -f maps/map02 -p1 ./jucapik.filler -p2 AIs/cpoulet.filler | ./shower.filler
+  
   The Ai I submitted for this project is jucapik.filler and the visualizer if shower.filler.
   When in the visualizer, Press the keys P or O to advance in the battle.
   
