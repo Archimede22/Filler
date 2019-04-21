@@ -13,7 +13,9 @@ I used a heatmap base on two heuristics :
  to boxes around the important areas
 
     ./usage : ./filler_vm -f [map] -p1 ./[player one's AI] -p2 [player two's AI]
+    
     or an example command could be
+    
     ./filler_vm -f maps/map02 -p1 ./jucapik.filler -p2 AIs/cpoulet.filler | ./shower.filler
   
   The Ai I submitted for this project is jucapik.filler and the visualizer if shower.filler.
