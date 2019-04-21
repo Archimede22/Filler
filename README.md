@@ -5,7 +5,7 @@ Each turn both AIs are given randomly generated blocks to place on a square grid
 With each of these pieces the AI's job is to cover the largest part of the grid,
 common strategies include cutting off you opponent, or trying to surround him,
 predict where he will go to flash there before he will.
-I used A heatmap base on two heuristics :
+I used a heatmap base on two heuristics :
   - boxes directly around the opponnent have high value
   - boxes around the the 3/4 and 1/4 of the map horizontally and vertically are given value to
       give the AI more liberty, so that it isn't solely stuck on the opponent player's positions
