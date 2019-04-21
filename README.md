@@ -19,7 +19,7 @@ I used a heatmap base on two heuristics :
     
     ./filler_vm -f maps/map02 -p1 ./jucapik.filler -p2 AIs/cpoulet.filler | ./shower.filler
   
-  The AI I submitted for this project is jucapik.filler and the visualizer if shower.filler.
+  The AI I submitted for this project is jucapik.filler and the visualizer is shower.filler.
   When in the visualizer, Press the keys P or O to advance in the battle.
   
 
